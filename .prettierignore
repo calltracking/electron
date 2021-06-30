@@ -1,0 +1,7 @@
+build
+.nyc_output
+coverage
+*.yml
+ui/build
+ui/public
+api/connector.json
