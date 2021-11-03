@@ -1,20 +1,24 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
-var ipc = require('electron').ipcMain;
+const ipc = require('electron').ipcMain;
 
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 350,
-    height: 600,
+    height: 650,
     show: false,
-    alwaysOnTop: true,   
+    alwaysOnTop: false,   
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
       contextIsolation: false,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      autoplayPolicy: "no-user-gesture-required",
+      enableWebSQL: false,
+      backgroundThrottling: false
     }
   })
 
@@ -23,18 +27,19 @@ function createWindow () {
   mainWindow.webContents.once('dom-ready', () => { mainWindow.show();});
 
   //mainWindow.webContents.openDevTools()
-  mainWindow.on('close', function (evt) {
-    evt.preventDefault();
+  mainWindow.on('close', (evt) => { evt.preventDefault();
+    app.quit();
+    process.exit(0); // XXX: make sure close actually closes the app, see: https://github.com/electron-userland/electron-forge/issues/545
   }); 
 
 
-  ipc.on('invokeAction', function(event, data){
-      var result = processData(data);
-      console.log("Action received!");
-      event.sender.send('actionReply', result);
+  ipc.on('invokeAction', (event, data) => {
+    const result = processData(data);
+    console.log("Action received!");
+    event.sender.send('actionReply', result);
   });
 
-  ipc.on('open-window', function(event, fileName){
+  ipc.on('open-window', (event, fileName) => {
     console.log("Open window received");
     mainWindow.show();
   });
@@ -46,7 +51,7 @@ function createWindow () {
 app.whenReady().then(() => {
   createWindow()
   
-  app.on('activate', function () {
+  app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -56,8 +61,8 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin')  { app.quit(); process.exit(0); }
 })
 
 // In this file you can include the rest of your app's specific main process
