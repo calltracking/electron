@@ -1,44 +1,44 @@
 {
-    "name": "leadsquared-dialer",
+    "name": "CallTrackingMetrics",
     "version": "1.0.0",
-    "description": "LeadSquared Dialer",
+    "description": "CallTrackingMetrics Communication Platform",
     "main": "main.js",
     "scripts": {
         "start": "electron-forge start",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "make-windows": "electron-forge make --platform win32",
-        "make-mac": "electron-forge make --platform darwin"
+        "make-mac": "electron-forge make --platform darwin",
+        "prepare-whitelabel": "electron-icon-builder --input=./public/icons/mac/1024.png --output=./public/packaged-icons"
     },
     "repository": "https://github.com/electron/electron-quick-start",
     "keywords": [
-        "LeadSquared",
+        "CallTrackingMetrics",
         "dialer",
         "call",
         "dialer",
         "lsq"
     ],
     "build": {
-      "appId": "app.ctm",
-      "productName": "CTMApp",
-      "files": [
-        "./build/**/*",
-        "./dist/**/*",
-        "./node_modules/**/*",
-        "./public/**/*",
-        "*.js"
-      ],
-      "mac": {
-
-        "icon": "./public/icons/mac/1024.png",
-        "category": "public.app-category.utilities"
-      },
-      "win": {
-        "icon": "./public/icons/win/256.png"
-      },
-      "directories": {
-        "buildResources": "public"
-      }
+        "appId": "app.ctm",
+        "productName": "CallTrackingMetrics",
+        "files": [
+            "./build/**/*",
+            "./dist/**/*",
+            "./node_modules/**/*",
+            "./public/**/*",
+            "*.js"
+        ],
+        "mac": {
+            "icon": "./public/icons/mac/1024.png",
+            "category": "public.app-category.utilities"
+        },
+        "win": {
+            "icon": "./public/icons/win/256.png"
+        },
+        "directories": {
+            "buildResources": "public"
+        }
     },
     "author": "Leadsquared",
     "license": "CC0-1.0",
@@ -49,22 +49,26 @@
         "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
         "@electron-forge/maker-zip": "^6.0.0-beta.61",
         "electron": "15.3.0",
-        "electron-packager": "^15.2.0",
+        "electron-packager": "^15.4.0",
         "electron-reload": "^1.5.0",
         "prettier": "2.4.1"
     },
     "dependencies": {
+        "@electron-forge/maker-dmg": "^6.0.0-beta.61",
+        "electron-icon-builder": "^2.0.1",
         "electron-squirrel-startup": "^1.0.0",
         "jquery": "^3.6.0"
     },
     "config": {
         "forge": {
-            "packagerConfig": {},
+            "packagerConfig": {
+                "icon": "./public/packaged-icons/icons/mac/icon.icns"
+            },
             "makers": [
                 {
                     "name": "@electron-forge/maker-squirrel",
                     "config": {
-                        "name": "leadsquared_dialer"
+                        "name": "CallTrackingMetrics"
                     }
                 },
                 {
@@ -80,6 +84,17 @@
                 {
                     "name": "@electron-forge/maker-rpm",
                     "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-dmg",
+                    "config": {
+                        "background": "./public/icons/mac/1024.png",
+                        "icon": "./public/icons/mac/1024.png",
+                        "format": "ULFO",
+                        "extendInfo": {
+                          "LSUIElement": 0
+                        }
+                    }
                 }
             ]
         }
