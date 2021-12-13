@@ -15,6 +15,17 @@ module.exports = {
   },
   "makers": [
     {
+      "name": "@electron-forge/maker-wix",
+      "config": {
+	 "name": "CallTrackingMetrics",
+	 "shortName": "CTM",
+	 "version": "1.0.0",
+         "language": 1033,
+         "manufacturer": "CallTrackingMetrics",
+	 "description": "CallTrackingMetrics Agent Phone",
+      }
+    },
+    {
       "name": "@electron-forge/maker-squirrel",
       "config": {
         "name": "CallTrackingMetrics"
