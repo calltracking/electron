@@ -54,7 +54,9 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   const { systemPreferences } = require('electron');
-  const microphone = systemPreferences.askForMediaAccess('microphone');
+  if (typeof(systemPreferences.askForMediaAccess) == 'function') {
+    systemPreferences.askForMediaAccess('microphone');
+  }
 
   const mainWindow = createWindow();
   
