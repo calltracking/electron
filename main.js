@@ -11,6 +11,7 @@ function createWindow () {
     show: false,
     alwaysOnTop: false,   
     resizable: false,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
@@ -52,6 +53,9 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  const { systemPreferences } = require('electron');
+  const microphone = systemPreferences.askForMediaAccess('microphone');
+
   const mainWindow = createWindow();
   
   app.on('activate', () => {
