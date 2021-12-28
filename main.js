@@ -24,7 +24,6 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.webContents.setUserAgent(mainWindow.webContents.getUserAgent() + " CTM");
   mainWindow.loadFile('index.html');
   mainWindow.webContents.once('dom-ready', () => { mainWindow.show();});
 

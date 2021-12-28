@@ -10,7 +10,7 @@ module.exports = {
     },
     "osxNotarize": {
       "appleId": process.env.NOTORIZE_APPLE_ID,
-      "appleIdPassword": process.env.NOTORIZE_APPLE_ID,
+      "appleIdPassword": process.env.NOTORIZE_APPLE_PASS,
     }
   },
   "makers": [
