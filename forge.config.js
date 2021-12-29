@@ -1,16 +1,29 @@
+const apple_id = process.env.NOTORIZE_APPLE_ID;
+const apple_pass = process.env.NOTORIZE_APPLE_PASS;
+const apple_identity = process.env.APPLE_DEVELOPER;
+console.log(`\nLoading with: '${apple_id}' and '${apple_identity}'`, );
 module.exports = {
   "packagerConfig": {
+    "app-bundle-id": "com.calltrackingmetrics.desk",
     "icon": "./public/packaged-icons/icons/mac/icon.icns",
+    asar: {
+      unpack: '*.node'
+    },
+    darwinDarkModeSupport: 'true',
+    name: 'CallTrackingMetrics',
     "osxSign": {
-      "identity": "Apple Development: Todd Fisher (QWATJPT97M)",
+      "identity": apple_identity,
       "hardened-runtime": true,
+      "gatekeeper-assess": false,
       "entitlements": "entitlements.plist",
       "entitlements-inherit": "entitlements.plist",
       "signature-flags": "library"
     },
     "osxNotarize": {
-      "appleId": process.env.NOTORIZE_APPLE_ID,
-      "appleIdPassword": process.env.NOTORIZE_APPLE_PASS,
+      "appleId": apple_id,
+      "appleIdPassword": '@keychain:CTMDesktopAppPassword'
+      // see: https://stackoverflow.com/questions/32976976/how-should-the-keychain-option-be-used-for-altool
+      // to setup the keychain for CTMDesktopAppPassword
     }
   },
   "makers": [
@@ -54,7 +67,10 @@ module.exports = {
         "extendInfo": {
           "LSUIElement": 0
         }
-      }
+      },
+      "platforms": [
+        "darwin"
+      ]
     }
   ]
 }

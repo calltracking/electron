@@ -20,7 +20,7 @@
         "lsq"
     ],
     "build": {
-        "appId": "app.ctm",
+        "appId": "com.calltrackingmetrics.desk",
         "productName": "CallTrackingMetrics",
         "files": [
             "./build/**/*",
@@ -49,14 +49,15 @@
         "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
         "@electron-forge/maker-wix": "^6.0.0-beta.61",
         "@electron-forge/maker-zip": "^6.0.0-beta.61",
-        "electron": "15.3.0",
+        "electron": "16.0.5",
         "electron-packager": "^15.4.0",
         "electron-reload": "^1.5.0",
         "electron-wix-msi": "^3.2.0",
-        "prettier": "2.4.1"
+        "prettier": "2.5.1"
     },
     "dependencies": {
         "@electron-forge/maker-dmg": "^6.0.0-beta.61",
+        "@electron-forge/maker-pkg": "^6.0.0-beta.61",
         "electron-icon-builder": "^2.0.1",
         "electron-squirrel-startup": "^1.0.0",
         "jquery": "^3.6.0"
