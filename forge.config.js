@@ -19,12 +19,12 @@ module.exports = {
       "entitlements-inherit": "entitlements.plist",
       "signature-flags": "library"
     },
-    "osxNotarize": {
+    /*"osxNotarize": {
       "appleId": apple_id,
       "appleIdPassword": '@keychain:CTMDesktopAppPassword'
       // see: https://stackoverflow.com/questions/32976976/how-should-the-keychain-option-be-used-for-altool
       // to setup the keychain for CTMDesktopAppPassword
-    }
+    }*/
   },
   "makers": [
     {
