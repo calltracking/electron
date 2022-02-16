@@ -20,4 +20,5 @@ onload = () => {
       }
     }
   })
+  //webview.addEventListener("dom-ready", () => { webview.openDevTools(); });
 }
