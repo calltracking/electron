@@ -9,9 +9,9 @@ function createWindow () {
     width: 350,
     height: 700,
     show: false,
-    alwaysOnTop: false,   
+    alwaysOnTop: false,
     resizable: true,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
