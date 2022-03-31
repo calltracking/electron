@@ -3,8 +3,63 @@ const {app, BrowserWindow, Tray, Menu} = require('electron')
 const path = require('path')
 const ipc = require('electron').ipcMain;
 
+function configureAppMenu() {
+  const template = [
+     {
+        label: 'CallTrackingMetrics',
+        submenu: [
+          { role: 'about' },
+        ]
+     },
+     {
+        label: 'File',
+        submenu: [
+          { role: 'quit' },
+        ]
+     },
+     {
+        label: 'Edit',
+        submenu: [
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
+          { role: 'cut' },
+          { role: 'copy' },
+          { role: 'paste' }
+        ]
+     },
+     {
+        label: 'View',
+        submenu: [
+           { role: 'reload' },
+           { type: 'separator' },
+           { role: 'resetzoom' },
+           { role: 'zoomin' },
+           { role: 'zoomout' },
+           { type: 'separator' },
+           { role: 'togglefullscreen' }
+        ]
+     },
+     {
+        role: 'window',
+        submenu: [
+           { role: 'minimize' },
+           { role: 'close' }
+        ]
+     },
+     {
+        role: 'help',
+        submenu: [ { role: 'about' } ]
+     }
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 function createWindow () {
   // Create the browser window.
+  configureAppMenu();
   const mainWindow = new BrowserWindow({
     width: 350,
     height: 700,
