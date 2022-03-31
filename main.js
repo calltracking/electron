@@ -6,12 +6,6 @@ const ipc = require('electron').ipcMain;
 function configureAppMenu() {
   const template = [
      {
-        label: 'CallTrackingMetrics',
-        submenu: [
-          { role: 'about' },
-        ]
-     },
-     {
         label: 'File',
         submenu: [
           { role: 'quit' },
@@ -52,6 +46,15 @@ function configureAppMenu() {
         submenu: [ { role: 'about' } ]
      }
   ];
+
+  if (process.platform == 'darwin')  {
+    template.unshift({
+        label: 'CallTrackingMetrics',
+        submenu: [
+          { role: 'about' },
+        ]
+     })
+  }
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
