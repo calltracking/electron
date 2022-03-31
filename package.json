@@ -1,6 +1,6 @@
 {
     "name": "CallTrackingMetrics",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "CallTrackingMetrics Communication Platform",
     "main": "main.js",
     "scripts": {
@@ -11,13 +11,13 @@
         "make-mac": "electron-forge make --platform darwin",
         "prepare-whitelabel": "electron-icon-builder --input=./public/icons/mac/1024.png --output=./public/packaged-icons"
     },
-    "repository": "https://github.com/electron/electron-quick-start",
+    "repository": "https://github.com/calltracking/electron",
     "keywords": [
         "CallTrackingMetrics",
-        "dialer",
-        "call",
-        "dialer",
-        "lsq"
+        "Phone Calls",
+        "Text Messages",
+        "Web Chats",
+        "Sales Enablement"
     ],
     "build": {
         "appId": "com.calltrackingmetrics.desk",
@@ -59,9 +59,10 @@
         "@electron-forge/maker-dmg": "^6.0.0-beta.61",
         "@electron-forge/maker-pkg": "^6.0.0-beta.61",
         "electron-icon-builder": "^2.0.1",
+        "electron-osx-sign": "^0.6.0",
         "electron-squirrel-startup": "^1.0.0",
         "jquery": "^3.6.0",
-        "update": "^0.7.4"
+        "update": "^0.4.2"
     },
     "config": {
         "forge": "./forge.config.js"
