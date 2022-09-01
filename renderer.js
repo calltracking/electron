@@ -20,5 +20,8 @@ onload = () => {
       }
     }
   })
+  ipcRenderer.on('open-debug', (e,d) => {
+    webview.openDevTools();
+  });
   //webview.addEventListener("dom-ready", () => { webview.openDevTools(); });
 }

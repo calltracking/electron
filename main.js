@@ -1,9 +1,9 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Tray, Menu} = require('electron')
+const {app, BrowserWindow, Tray, Menu, safeStorage} = require('electron')
 const path = require('path')
 const ipc = require('electron').ipcMain;
 
-function configureAppMenu() {
+function configureAppMenu(mainWindow) {
   const template = [
      {
         label: 'File',
@@ -43,7 +43,11 @@ function configureAppMenu() {
      },
      {
         role: 'help',
-        submenu: [ { role: 'about' } ]
+        submenu: [ { role: 'about' },
+                   { label: "Debug", click: () => {
+                    mainWindow.webContents.send('open-debug', {});
+                    //mainWindow.webContents.querySelector('webview').openDevTools()
+                  } } ]
      }
   ];
 
@@ -62,10 +66,9 @@ function configureAppMenu() {
 
 function createWindow () {
   // Create the browser window.
-  configureAppMenu();
   const mainWindow = new BrowserWindow({
-    width: 350,
-    height: 700,
+    width: 420,
+    height: 800,
     show: false,
     alwaysOnTop: false,
     resizable: true,
@@ -80,6 +83,7 @@ function createWindow () {
       backgroundThrottling: false
     }
   })
+  configureAppMenu(mainWindow);
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html');
