@@ -1,7 +1,6 @@
-const apple_id = process.env.NOTORIZE_APPLE_ID;
-const apple_pass = process.env.NOTORIZE_APPLE_PASS;
-const apple_identity = process.env.APPLE_DEVELOPER;
-console.log(`\nLoading with: '${apple_id}' and '${apple_identity}'`, );
+const APPLE_KEY = process.env.APPLE_KEY;
+const APPLE_ISSUER = process.env.APPLE_ISSUER;
+
 module.exports = {
   "packagerConfig": {
     "app-bundle-id": "com.calltrackingmetrics.desk",
@@ -12,30 +11,28 @@ module.exports = {
     darwinDarkModeSupport: 'true',
     name: 'CallTrackingMetrics',
     "osxSign": {
-      "identity": apple_identity,
+      "identity": "656DA030388AB2EB000F211E0A6031302B9913A2",
       "hardened-runtime": true,
       "gatekeeper-assess": false,
       "entitlements": "entitlements.plist",
       "entitlements-inherit": "entitlements.plist",
       "signature-flags": "library"
     },
-    /*"osxNotarize": {
-      "appleId": apple_id,
-      "appleIdPassword": '@keychain:CTMDesktopAppPassword'
-      // see: https://stackoverflow.com/questions/32976976/how-should-the-keychain-option-be-used-for-altool
-      // to setup the keychain for CTMDesktopAppPassword
-    }*/
+    "osxNotarize": {
+      "appleApiKey": APPLE_KEY,
+      "appleApiIssuer": APPLE_ISSUER
+    }
   },
   "makers": [
     {
       "name": "@electron-forge/maker-wix",
       "config": {
-	 "name": "CallTrackingMetrics",
-	 "shortName": "CTM",
-	 "version": "1.0.0",
-         "language": 1033,
-         "manufacturer": "CallTrackingMetrics",
-	 "description": "CallTrackingMetrics Agent Phone",
+        "name": "CallTrackingMetrics",
+        "shortName": "CTM",
+        "version": "1.0.5",
+        "language": 1033,
+        "manufacturer": "CallTrackingMetrics",
+        "description": "CallTrackingMetrics Agent Phone",
       }
     },
     {
