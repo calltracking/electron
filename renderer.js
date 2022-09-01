@@ -23,5 +23,8 @@ onload = () => {
   ipcRenderer.on('open-debug', (e,d) => {
     webview.openDevTools();
   });
+  ipcRenderer.on('force-reload', (e,d) => {
+    webview.reloadIgnoringCache();
+  });
   //webview.addEventListener("dom-ready", () => { webview.openDevTools(); });
 }

@@ -44,9 +44,11 @@ function configureAppMenu(mainWindow) {
      {
         role: 'help',
         submenu: [ { role: 'about' },
+                   { label: "Force Reload", click: () => {
+                    mainWindow.webContents.send('force-reload', {});
+                   } },
                    { label: "Debug", click: () => {
                     mainWindow.webContents.send('open-debug', {});
-                    //mainWindow.webContents.querySelector('webview').openDevTools()
                   } } ]
      }
   ];
