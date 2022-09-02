@@ -1,7 +1,10 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Tray, Menu, safeStorage} = require('electron')
+const fs  = require('fs');
 const path = require('path')
+const {app, BrowserWindow, Tray, Menu, safeStorage} = require('electron')
 const ipc = require('electron').ipcMain;
+const keytar = require('keytar');
+
 
 function configureAppMenu(mainWindow) {
   const template = [
@@ -48,8 +51,11 @@ function configureAppMenu(mainWindow) {
                     mainWindow.webContents.send('force-reload', {});
                    } },
                    { label: "Debug", click: () => {
-                    mainWindow.webContents.send('open-debug', {});
-                  } } ]
+                      // open all the consoles
+                      mainWindow.webContents.openDevTools()
+                      mainWindow.webContents.send('open-debug', {});
+                  } },
+                  ]
      }
   ];
 
@@ -79,7 +85,7 @@ function createWindow () {
       nodeIntegration: true,
       webviewTag: true,
       contextIsolation: false,
-      preload: path.join(__dirname, 'preload.js'),
+      //preload: path.join(__dirname, 'preload.js'),
       autoplayPolicy: "no-user-gesture-required",
       enableWebSQL: false,
       backgroundThrottling: false
@@ -91,7 +97,6 @@ function createWindow () {
   mainWindow.loadFile('index.html');
   mainWindow.webContents.once('dom-ready', () => { mainWindow.show();});
 
-  //mainWindow.webContents.openDevTools()
   mainWindow.on('close', (evt) => { evt.preventDefault();
     app.quit();
     process.exit(0); // XXX: make sure close actually closes the app, see: https://github.com/electron-userland/electron-forge/issues/545
@@ -108,6 +113,36 @@ function createWindow () {
     console.log("Open window received");
     mainWindow.show();
   });
+
+  // safe the email address in user file encrypted and then use that to lookup password in keychain/or os secure storage
+  if (safeStorage.isEncryptionAvailable()) {
+    // ensure code sends load-credentials which then waits to recevie credentials response
+    ipc.on('load-credentials', async (event, filter) => {
+      console.log("look for email credentials", filter);
+      const userLogin = path.join(app.getPath('userData'), 'ctm-login');
+      try {
+        const encrypted = fs.readFileSync(userLogin);
+        if (encrypted) {
+          const email = safeStorage.decryptString(encrypted);
+          const pass = await keytar.getPassword("app.calltrackingmetrics.com",email);
+          const r = mainWindow.webContents.send('credentials-ready', JSON.stringify({credentials: {email: email, pass: pass}}));
+        } else {
+          mainWindow.webContents.send('credentials-ready', JSON.stringify({credentials: {}}));
+        }
+      } catch(e) {
+        console.error(e);
+        mainWindow.webContents.send('credentials-ready', JSON.stringify({credentials: {}}));
+      }
+    });
+
+    ipc.on('save-credentials', (event, data) => {
+      const usrpwd = JSON.parse(data); // parse before saving
+      const userLogin = path.join(app.getPath('userData'), 'ctm-login');
+      fs.writeFileSync(userLogin, safeStorage.encryptString(usrpwd.email), {flags: 'wb'});
+      keytar.setPassword("app.calltrackingmetrics.com",usrpwd.email, usrpwd.pass);
+    });
+
+  }
 
   return mainWindow;
 }
@@ -158,6 +193,8 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin')  { app.quit(); process.exit(0); }
 })
+      const userLogin = app.getPath('userData');
+      console.log(userLogin)
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
