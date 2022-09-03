@@ -58,7 +58,8 @@
         "electron-wix-msi": "^4.0.0"
     },
     "dependencies": {
-        "keytar": "^7.9.0"
+        "keytar": "^7.9.0",
+        "update-electron-app": "^2.0.1"
     },
     "config": {
         "forge": "./forge.config.js"

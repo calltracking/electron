@@ -5,6 +5,8 @@ const {app, BrowserWindow, Tray, Menu, safeStorage} = require('electron')
 const ipc = require('electron').ipcMain;
 const keytar = require('keytar');
 
+require('update-electron-app')()
+
 
 function configureAppMenu(mainWindow) {
   const template = [
