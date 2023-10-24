@@ -43,23 +43,23 @@
     "author": "CallTrackingMetrics",
     "license": "CC0-1.0",
     "devDependencies": {
-        "@electron-forge/cli": "^6.0.0-beta.68",
-        "@electron-forge/maker-deb": "^6.0.0-beta.68",
-        "@electron-forge/maker-dmg": "^6.0.0-beta.68",
-        "@electron-forge/maker-pkg": "^6.0.0-beta.68",
-        "@electron-forge/maker-rpm": "^6.0.0-beta.68",
-        "@electron-forge/maker-squirrel": "^6.0.0-beta.68",
-        "@electron-forge/maker-wix": "^6.0.0-beta.68",
-        "@electron-forge/maker-zip": "^6.0.0-beta.68",
-        "electron": "21.2.0",
+        "@electron-forge/cli": "6.4.2",
+        "@electron-forge/maker-deb": "6.4.2",
+        "@electron-forge/maker-dmg": "6.4.2",
+        "@electron-forge/maker-pkg": "6.4.2",
+        "@electron-forge/maker-rpm": "6.4.2",
+        "@electron-forge/maker-squirrel": "6.4.2",
+        "@electron-forge/maker-wix": "6.4.2",
+        "@electron-forge/maker-zip": "6.4.2",
+        "electron": "27.0.2",
         "electron-icon-builder": "^2.0.1",
-        "electron-packager": "17.0.0",
+        "electron-packager": "17.1.2",
         "electron-reload": "^1.5.0",
-        "electron-wix-msi": "^4.0.0"
+        "electron-wix-msi": "5.0.0"
     },
     "dependencies": {
         "keytar": "^7.9.0",
-        "update-electron-app": "^2.0.1"
+        "update-electron-app": "3.0.0"
     },
     "config": {
         "forge": "./forge.config.js"
